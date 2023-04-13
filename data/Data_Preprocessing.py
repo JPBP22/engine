@@ -11,21 +11,21 @@ warnings.filterwarnings("ignore")
 np.warnings.filterwarnings('ignore')
 
 # Load games data
-with open('Data/gamesdata.json', 'r') as f:
+with open('data/gamesdata.json', 'r') as f:
     games_data = json.load(f)
 
 # Create a dataframe from games data
 df = pd.DataFrame(games_data)
 
 # Save dataframe as a csv file
-df.to_csv('gamesdata.csv', index=False)
+df.to_csv('data/gamesdata.csv', index=False)
 
 # Extract the number of games for each user
 num_games = df.groupby('user_id')['items'].count().reset_index()
 num_games.columns = ['user_id', 'items_count']
 
 # Save the number of games dataframe as a csv file
-num_games.to_csv('numgames.csv', index=False)
+num_games.to_csv('data/numgames.csv', index=False)
 
 # Preview items column values for the first user
 print(df.loc[df['user_id'] == 0, 'items'].values[0][:2])
@@ -55,5 +55,5 @@ merged_data = merged_data.dropna(subset=['title'])
 rec_data = merged_data[['uid', 'id', 'owned']]
 
 # Save the merged and recommendation dataframes to csv files
-merged_data.to_csv('mergeddata.csv', index=False)
-rec_data.to_csv('recdata.csv', index=False)
+merged_data.to_csv('data/mergeddata.csv', index=False)
+rec_data.to_csv('data/recdata.csv', index=False)
