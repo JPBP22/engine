@@ -6,28 +6,28 @@ on:
       - workflows
 
 jobs:
-  generate-requirements:
+  generate:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-      
-    - name: Setup Python environment
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.9'
-
-    - name: Install dependencies
-      run: pip install -r requirements.txt
-
-    - name: Generate requirements.txt
-      run: |
-        pip install --upgrade pip
-        pip freeze > requirements.txt
-
-    - name: Commit requirements.txt
-      uses: stefanzweifel/git-auto-commit-action@v4
-      with:
-        commit_message: "Generate requirements.txt"
-        file_pattern: requirements.txt
-        commit_options: "--branch=workflows"
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Generate requirements.txt
+        run: pip freeze > requirements.txt
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Generate requirements.txt
+          commit_options: "--branch=workflows"
+          file_pattern: requirements.txt
+          status_options: ""
+          add_options: ""
+          author_name: github-actions[bot]
+          author_email: 41898282+github-actions[bot]@users.noreply.github.com
