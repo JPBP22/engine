@@ -3,7 +3,7 @@ name: Generate requirements.txt
 on:
   push:
     branches:
-      - main
+      - workflows
 
 jobs:
   generate-requirements:
@@ -26,10 +26,8 @@ jobs:
         pip freeze > requirements.txt
 
     - name: Commit requirements.txt
-      run: |
-        git config --global user.name "anthonyfyaacoub"
-        git config --global user.email "ayaacoub.ieu2020@student.ie.edu"
-        git checkout -b workflows
-        git add requirements.txt
-        git commit -m "Update requirements.txt"
-        git push --set-upstream origin workflows
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: "Generate requirements.txt"
+        file_pattern: requirements.txt
+        commit_options: "--branch=workflows"
